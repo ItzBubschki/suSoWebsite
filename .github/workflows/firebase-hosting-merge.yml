@@ -18,6 +18,5 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUDOKUSOLVER_6D41A }}'
           channelId: live
           projectId: sudokusolver-6d41a
-          target: sudoku-solver
         env:
           FIREBASE_CLI_PREVIEWS: hostingchannels

@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target": "suso",
     "public": "public",
     "ignore": [
       "firebase.json",
