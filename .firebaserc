@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "sudokusolver-6d41a"
+  },
+  "targets": {
+    "sudokusolver-6d41a": {
+      "hosting": {
+        "suso": [
+          "sudoku-solver"
+        ]
+      }
+    }
+  }
+}
