@@ -1,0 +1,1 @@
+export const SUDOKU_SOLVER_BACKEND = 'http://localhost:6969';

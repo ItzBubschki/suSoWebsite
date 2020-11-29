@@ -8,15 +8,27 @@ class GameTile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            invalid: false
+            invalid: false,
+            row: this.props.rowNumber,
+            column: this.props.columnNumber
+        }
+    }
+
+    handleInputChange = (event) => {
+        try {
+            this.props.handleChange(this.state.row, this.state.column, event);
+            this.setState({invalid: false})
+        } catch {
+            this.setState({invalid: true})
         }
     }
 
     render() {
         return (
-            <TextField type="text" data-rowNumber={this.props.rowNumber} data-columnNumber={this.props.columnNumber}
+            <TextField data-rowNumber={this.props.rowNumber} data-columnNumber={this.props.columnNumber}
                        value={this.props.fieldValue} margin="dense"
-                       onChange={this.props.handleChange} error={this.state.invalid} className="gameTile"
+                       onChange={this.handleInputChange} error={this.state.invalid} className="gameTile"
+                       variant="outlined"
             />
         );
     }

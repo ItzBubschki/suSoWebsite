@@ -1,21 +1,23 @@
 import React from 'react';
 import GameTile from "./tile";
 import Button from '@material-ui/core/Button';
+import * as API from "../../shared/API";
 
 class GameField extends React.Component {
     constructor(props) {
         super(props);
+        const emptyTiles = Array(9).fill("").map(() => Array(9).fill(""));
         this.state = {
             loading: false,
-            tileValues: []
+            tileValues: emptyTiles
         }
     }
 
-    handleChange = (event) => {
-        const {name, value} = event.target;
+    handleChange = (row, column, event) => {
+        const {value} = event.target;
         if ((value >= 1 && value <= 9) || value === "") {
             const currentFieldValues = this.state.tileValues;
-            currentFieldValues[name] = value;
+            currentFieldValues[row][column] = value;
             this.setState({tileValues: currentFieldValues});
         } else {
             throw new Error("invalid input");
@@ -31,7 +33,8 @@ class GameField extends React.Component {
     }
 
     solveGame = () => {
-
+        const filledField = API.getFilledGameField(this.state.tileValues);
+        console.log(filledField);
     }
 
     render() {
@@ -67,7 +70,7 @@ class GameField extends React.Component {
                     </div>
                 </div>
                 <div className="solve-game">
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="primary" onClick={this.solveGame}>
                         Solve game
                     </Button>
                 </div>
