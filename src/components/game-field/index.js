@@ -6,7 +6,7 @@ import * as API from "../../shared/API";
 class GameField extends React.Component {
     constructor(props) {
         super(props);
-        const emptyTiles = Array(9).fill("").map(() => Array(9).fill(""));
+        const emptyTiles = Array(9).fill(" ").map(() => Array(9).fill(""));
         this.state = {
             loading: false,
             tileValues: emptyTiles
@@ -24,50 +24,31 @@ class GameField extends React.Component {
         }
     }
 
-    renderTileRow(rowNumber) {
-        const row = [];
+    renderTileRows() {
+        const rows = [];
         for (let i = 0; i < 9; i++) {
-            row.push(<GameTile rowNumber={rowNumber} handleChange={this.handleChange} columnNumber={i}/>);
+            const row = [];
+            for (let j = 0; j < 9; j++) {
+                row.push(<GameTile rowNumber={i} columnNumber={j} handleChange={this.handleChange}
+                                   fieldValue={this.state.tileValues[i][j]}
+                />);
+            }
+            rows.push(<div>{row}</div>);
         }
-        return row;
+        return rows;
     }
 
-    solveGame = () => {
-        const filledField = API.getFilledGameField(this.state.tileValues);
-        console.log(filledField);
+    solveGame = async () => {
+        const data = {data: this.state.tileValues};
+        const filledField = await API.getFilledGameField(data);
+        this.setState({tileValues: filledField});
     }
 
     render() {
         return (
             <div>
                 <div className="game-field">
-                    <div className="row first-row">
-                        {this.renderTileRow(0)}
-                    </div>
-                    <div className="row mid-row">
-                        {this.renderTileRow(1)}
-                    </div>
-                    <div className="row bottom-row">
-                        {this.renderTileRow(2)}
-                    </div>
-                    <div className="row top-row">
-                        {this.renderTileRow(3)}
-                    </div>
-                    <div className="row mid-row">
-                        {this.renderTileRow(4)}
-                    </div>
-                    <div className="row bottom-row">
-                        {this.renderTileRow(5)}
-                    </div>
-                    <div className="row top-row">
-                        {this.renderTileRow(6)}
-                    </div>
-                    <div className="row mid-row">
-                        {this.renderTileRow(7)}
-                    </div>
-                    <div className="row bottom-row">
-                        {this.renderTileRow(8)}
-                    </div>
+                    {this.renderTileRows()}
                 </div>
                 <div className="solve-game">
                     <Button variant="contained" color="primary" onClick={this.solveGame}>
